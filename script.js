@@ -18,18 +18,37 @@ const moveFocusToNextInput = (eventOriginationIndex) => {
   inputToFocus.focus();
 };
 
+const validInputs = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "Backspace"];
+
+
 const onInputChange = (event) => {
+
+  if(!validInputs.includes(event.key)){
+    return;
+  }
+
   const input = event.target;
   const index = parseInt(input.getAttribute("data-index"));
 
+  
+
+  
   if (event.key === "Backspace") {
     moveFocusToPreviousInput(index);
     return;
   }
-
+  
   moveFocusToNextInput(index);
 };
 
 inputs.forEach((input) => {
   input.addEventListener("keyup", onInputChange);
 });
+
+inputs.forEach((input) =>{
+  input.addEventListener("keydown",(event) =>{
+    if(!validInputs.includes(event.key)){
+      event.preventDefault();
+    }
+  })
+})
